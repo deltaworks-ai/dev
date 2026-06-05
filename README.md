@@ -2,14 +2,17 @@
 
 Observation under constraint.
 
-Experiments, failures, and system behavior at the edge are recorded here.  
-Nothing is assumed. Nothing is protected.
+Documenting the bleeding edge.  
+Engineering notes and AI system research.
 
-This layer exists to:
+This layer:
 
-• test systems beyond comfort  
-• expose instability  
-• document what breaks  
+• experiments  
+• measures  
+• documents failure  
 
-No conclusions. No commitment.  
-Only reality.
+If behavior cannot be observed,  
+it is not understood.
+---
+D　Ξ　L　T　Λ　W　Ω　R　K　S
+e n g i n e e r i n g　t h e　s t a c k
