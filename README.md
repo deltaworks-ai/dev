@@ -1,7 +1,6 @@
 # deltaworks.dev
 
-Observation under constraint.
-
+**observation under constraint**
 Documenting the bleeding edge.  
 Engineering notes and AI system research.
 
