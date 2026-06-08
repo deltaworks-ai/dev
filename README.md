@@ -1,7 +1,7 @@
 # deltaworks.dev
 
-**observation under constraint**  
-Experiments, failure, edge behavior. Documenting the bleeding edge.  
+**observations at the edge**  
+Experiments, failure, doubt. Documenting the bleeding edge.  
 Engineering notes and AI system research.
 
 Nothing is assumed. Nothing is protected.
