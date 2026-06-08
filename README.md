@@ -7,10 +7,10 @@ Engineering notes and AI system research.
 Nothing is assumed. Nothing is protected.
 No conclusions, no commitment. Only reality.
 
-This layer:
-•　tests systems beyond comfort
-•　exposes instability
-•　documents failure
+This layer:  
+•　tests systems beyond comfort  
+•　exposes instability  
+•　documents failure  
 
 If behavior cannot be observed,  
 it is not understood.
