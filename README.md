@@ -1,6 +1,6 @@
 # deltaworks.dev
 
-**experimentation and observation**  
+**observation and iteration**  
 Documenting the bleeding edge.  
 Engineering notes and AI system research.
 
