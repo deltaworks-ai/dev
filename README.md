@@ -1,14 +1,16 @@
 # deltaworks.dev
 
-**observation and iteration**  
-Documenting the bleeding edge.  
+**observation under constraint**  
+Experiments, failure, edge behavior. Documenting the bleeding edge.  
 Engineering notes and AI system research.
 
-This layer:
+Nothing is assumed. Nothing is protected.
+No conclusions, no commitment. Only reality.
 
-• reports but does not verdict  
-• experiments and measures  
-• documents failure  
+This layer:
+•　tests systems beyond comfort
+•　exposes instability
+•　documents failure
 
 If behavior cannot be observed,  
 it is not understood.
