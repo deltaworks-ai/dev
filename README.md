@@ -4,7 +4,7 @@
 Experiments, failure, doubt. Documenting the bleeding edge.  
 Engineering notes and AI system research.
 
-Nothing is assumed. Nothing is protected.
+Nothing is assumed. Nothing is protected.  
 No conclusions, no commitment. Only reality.
 
 This layer:  
