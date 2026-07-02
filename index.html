@@ -1,119 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>deltaworks.dev</title>
-<meta name="description" content="observation and iteration. Documenting the bleeding edge.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root{--void:#06090a; --signal:#4fe6dd; --bright:#7ff0e8; --core:#dffbf6; --deep:#159a90;
-    --mono:"JetBrains Mono",ui-monospace,monospace; --sans:"Space Grotesk",system-ui,sans-serif;
-    --wordmark:"Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;}
-  *{box-sizing:border-box;}
-  html,body{margin:0;height:100%;}
-  body{min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:46px; text-align:center; padding:64px 32px 120px; position:relative; overflow:hidden; background:var(--void); background-image:radial-gradient(120% 70% at 50% 44%, rgba(40,165,153,.10) 0%, rgba(15,82,78,.04) 36%, rgba(6,9,10,0) 66%); color:#c3d0ce; font-family:var(--sans); font-weight:300;}
-  .vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(130% 100% at 50% 46%, rgba(0,0,0,0) 48%, rgba(0,0,0,.7) 100%);}
-  .mark{animation:breathe 5s ease-in-out infinite; filter:drop-shadow(0 0 6px var(--bright)) drop-shadow(0 0 18px var(--signal)) drop-shadow(0 0 42px var(--deep)); position:relative;}
-  @keyframes breathe{0%,100%{opacity:.9;transform:scale(1);}50%{opacity:1;transform:scale(1.015);}}
-  .domain{position:relative; font-family:var(--wordmark); font-weight:500; font-size:clamp(34px,7vw,56px); letter-spacing:.04em; color:var(--core); text-shadow:0 0 16px rgba(79,230,221,.3),0 0 44px rgba(21,154,144,.32);}
-  .domain .tld{color:var(--signal);}
-  .tagline{position:relative; font-size:clamp(15px,2.3vw,22px); letter-spacing:.5em; text-transform:lowercase; color:rgba(159,212,206,.78); padding-left:.5em;}
-  .cipher{position:relative; display:flex; align-items:center; gap:clamp(16px,3.4vw,30px); transition:transform .25s ease;}
-  .cipher.lock{transform:scale(1.07);}
-  .cell{font-family:var(--mono); font-size:clamp(30px,6.4vw,46px); width:1.1em; text-align:center; color:rgba(143,225,219,.6); text-shadow:0 0 14px var(--deep); font-variant-numeric:tabular-nums; transition:color .25s ease, text-shadow .25s ease;}
-  .cipher.lock .cell{color:var(--core); text-shadow:0 0 14px var(--bright), 0 0 34px var(--signal), 0 0 60px var(--deep);}
-  .sep{font-family:var(--mono); font-size:clamp(30px,6.4vw,46px); color:rgba(79,230,221,.22); line-height:1; transition:color .25s ease;}
-  .cipher.lock .sep{color:rgba(127,240,232,.7);}
-  .verdict{position:relative; height:16px; margin-top:-26px; font-family:var(--mono); font-size:12px; letter-spacing:.42em; text-transform:uppercase; color:rgba(127,240,232,.9); opacity:0; transition:opacity .3s ease; padding-left:.42em; text-shadow:0 0 14px var(--deep);}
-  .verdict.show{opacity:1;}
-  .home{position:absolute; left:0; right:0; bottom:34px; display:flex; align-items:center; justify-content:center; gap:14px; text-decoration:none; opacity:.55; transition:opacity .2s;}
-  .home:hover{opacity:1;}
-  .home span{font-family:var(--mono); font-size:12px; letter-spacing:.18em; color:rgba(140,182,178,.8);}
-</style>
+<script src="./support.js"></script>
 </head>
 <body>
-  <div class="vignette"></div>
-  <div class="mark"><svg width="100" height="100" viewBox="0 0 100 100"><path d="M50 14 L86 80 L14 80 Z" fill="rgba(79,230,221,.05)" stroke="#dffbf6" stroke-width="5" stroke-linejoin="round"/></svg></div>
-  <div class="domain">deltaworks<span class="tld">.dev</span></div>
-  <div class="tagline">observation and iteration</div>
-  <div class="cipher" id="cipher">
-    <span class="cell" id="c1">Ξ</span>
-    <span class="sep">·</span>
-    <span class="cell" id="c2">Λ</span>
-    <span class="sep">·</span>
-    <span class="cell" id="c3">Ω</span>
-  </div>
-  <div class="verdict" id="verdict">combination accepted</div>
-  <a class="home" href="https://deltaworks.it" title="the stack — deltaworks.it">
-    <svg width="20" height="20" viewBox="0 0 100 100" style="filter:drop-shadow(0 0 5px #159a90)"><path d="M50 14 L86 80 L14 80 Z" fill="none" stroke="#4fe6dd" stroke-width="6" stroke-linejoin="round"/></svg>
-    <span>deltaworks.it</span>
-  </a>
-<script>
-(function(){
-  /* flip MODE to 'countdown' to reveal a live H:M:S timer instead of the cipher */
-  var MODE = 'cipher';   /* 'cipher' | 'countdown' */
-  var c1=document.getElementById('c1'), c2=document.getElementById('c2'), c3=document.getElementById('c3');
-  var cipher=document.getElementById('cipher'), verdict=document.getElementById('verdict');
-  var pad=function(n){return String(n).padStart(2,'0');};
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; background: #06090a; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
 
-  if (MODE === 'countdown') {
-    cipher.style.gap='clamp(20px,4vw,34px)';
-    var target=new Date('2026-06-22T00:00:00').getTime();
-    var tick=function(){ var diff=Math.max(0,target-Date.now());
-      var h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
-      c1.textContent=pad(h); c2.textContent=pad(m); c3.textContent=pad(s);
-    }; tick(); setInterval(tick,1000);
-    return;
+<div style="min-height:100vh; background:#06090a;">
+
+  <!-- HEADER -->
+  <header style="position:sticky; top:0; z-index:10; background:rgba(6,9,10,0.96); backdrop-filter:blur(16px); border-bottom:1px solid rgba(79,230,221,0.07);">
+    <div style="max-width:760px; margin:0 auto; padding:0 40px; height:60px; display:flex; align-items:center; gap:20px;">
+      <div onClick="{{ goHome }}" style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:none;">
+        <div style="filter:drop-shadow(0 0 3px rgba(79,230,221,0.50));">
+          <svg width="18" height="18" viewBox="0 0 100 100" style="display:block;"><path d="M50 14 L86 80 L14 80 Z" fill="rgba(79,230,221,0.05)" stroke="#dffbf6" stroke-width="7" stroke-linejoin="round"></path></svg>
+        </div>
+      </div>
+      <div style="width:1px; height:22px; background:rgba(79,230,221,0.10);"></div>
+      <div style="flex:1;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:rgba(79,230,221,0.55);">deltaworks</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.22em; color:#4fe6dd;">.dev</span>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.30em; text-transform:uppercase; color:rgba(95,217,207,0.25);">observation and iteration</div>
+    </div>
+  </header>
+
+  <!-- OVERVIEW -->
+  <sc-if value="{{ showOverview }}" hint-placeholder-val="{{ true }}">
+    <main style="max-width:760px; margin:0 auto; padding:0 40px 120px;">
+
+      <!-- intro block -->
+      <div style="padding:56px 0 48px; border-bottom:1px solid rgba(79,230,221,0.07); margin-bottom:0;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.20em; color:rgba(79,230,221,0.55); margin-bottom:12px;">// lab journal</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.9; color:rgba(95,217,207,0.35); max-width:520px;">
+          If behavior cannot be observed, it is not understood.<br>
+          If it cannot be measured, it is not real.
+        </div>
+      </div>
+
+      <!-- filter row -->
+      <div style="display:flex; gap:20px; padding:20px 0; border-bottom:1px solid rgba(79,230,221,0.06);">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.select }}" style="{{ f.style }}" style-hover="color:rgba(79,230,221,0.65);">{{ f.label }}</button>
+        </sc-for>
+      </div>
+
+      <!-- article list -->
+      <sc-for list="{{ visibleArticles }}" as="art" hint-placeholder-count="4">
+        <div onClick="{{ art.open }}" style="display:grid; grid-template-columns:20px 1fr; gap:0 20px; padding:28px 0; border-bottom:1px solid rgba(79,230,221,0.06); cursor:pointer;" style-hover="background:rgba(79,230,221,0.014); margin:0 -16px; padding-left:16px; padding-right:16px;">
+          <div style="padding-top:4px;">
+            <div style="{{ art.dotStyle }}"></div>
+          </div>
+          <div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+              <div style="{{ art.statusStyle }}">{{ art.statusLabel }}</div>
+              <span style="color:rgba(79,230,221,0.14); font-size:9px;">·</span>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(95,217,207,0.25);">{{ art.dateStr }}</div>
+              <span style="color:rgba(79,230,221,0.14); font-size:9px;">·</span>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.14em; color:rgba(95,217,207,0.22);">iter {{ art.iter }}</div>
+            </div>
+            <div style="font-family:system-ui,-apple-system,sans-serif; font-size:16px; font-weight:500; line-height:1.30; color:rgba(210,240,232,0.88); margin-bottom:9px; text-wrap:pretty;">{{ art.title }}</div>
+            <div style="font-family:system-ui,-apple-system,sans-serif; font-size:13.5px; line-height:1.65; color:rgba(145,205,192,0.44); margin-bottom:12px;">{{ art.observation }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.12em; color:rgba(79,230,221,0.28);">{{ art.tagsStr }}</div>
+          </div>
+        </div>
+      </sc-for>
+
+    </main>
+  </sc-if>
+
+  <!-- DETAIL -->
+  <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ false }}">
+    <main style="max-width:760px; margin:0 auto; padding:0 40px 120px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:40px 0 44px;">
+        <button onClick="{{ back }}" style="background:transparent; border:none; padding:0; cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.20em; color:rgba(79,230,221,0.32);" style-hover="color:#4fe6dd;">← dev</button>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="{{ detailStatusStyle }}">{{ detailStatusLabel }}</div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(95,217,207,0.22);">iter {{ detailIter }}</span>
+        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.16em; color:rgba(79,230,221,0.32); margin-bottom:18px;">{{ artTagsStr }}</div>
+      <h1 style="font-family:system-ui,-apple-system,sans-serif; font-size:26px; font-weight:500; line-height:1.26; color:rgba(210,240,232,0.92); margin:0 0 16px; text-wrap:pretty;">{{ artTitle }}</h1>
+      <div style="display:flex; gap:10px; align-items:center; margin-bottom:48px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(95,217,207,0.30);">{{ artDate }}</span>
+        <span style="color:rgba(79,230,221,0.14); font-size:9px;">·</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:9px; color:rgba(95,217,207,0.30);">{{ artRead }}</span>
+      </div>
+      <div style="height:1px; background:linear-gradient(90deg,rgba(79,230,221,0.14),rgba(79,230,221,0)); margin-bottom:48px;"></div>
+      <div style="max-width:640px;">{{ articleBody }}</div>
+    </main>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{ &quot;$preview&quot;: { &quot;width&quot;: 860, &quot;height&quot;: 880 } }">
+class Component extends DCLogic {
+  state = { id: null, filter: 'all' };
+
+  statusColors = {
+    ongoing:      { dot: '#4fe6dd', text: 'rgba(79,230,221,0.75)',  bg: 'rgba(79,230,221,0.09)'  },
+    concluded:    { dot: 'rgba(95,217,207,0.38)', text: 'rgba(95,217,207,0.50)', bg: 'rgba(95,217,207,0.07)' },
+    failed:       { dot: 'rgba(230,120,79,0.70)', text: 'rgba(230,120,79,0.65)', bg: 'rgba(230,120,79,0.08)' },
+    inconclusive: { dot: 'rgba(150,180,170,0.35)', text: 'rgba(150,180,170,0.45)', bg: 'rgba(150,180,170,0.06)' },
+  };
+
+  articles = [
+    {
+      id: 1, status: 'ongoing', iter: '04',
+      title: 'Thermal behavior under sustained 70B inference load',
+      observation: 'CPU package temperature stabilizes 12°C higher than idle within 8 minutes of continuous inference. GPU junction temperature has not stabilized within the 20-minute observation window.',
+      tags: ['thermal', 'inference', 'behavior', 'hardware'],
+      read: 6, date: '2026-06-18',
+      body: [
+        { t: 'log', c: 'OBSERVATION — iter 04 — ongoing', sub: '2026-06-18 · thermal · inference' },
+        { t: 'p', c: 'Sustained 70B parameter inference produces a thermal pattern that differs qualitatively from burst inference. The first 3 minutes show rapid temperature increase across both CPU and GPU. Between minutes 3 and 8, CPU package temperature stabilizes. GPU junction temperature has not stabilized within the observation window — this iteration was cut at 20 minutes.' },
+        { t: 'h2', c: 'observed behavior' },
+        { t: 'code', lang: 'data', c: 'iter_01  cutoff: 8min   cpu_delta: +9°C    gpu_delta: +18°C  status: inconclusive\niter_02  cutoff: 12min  cpu_delta: +11°C   gpu_delta: +22°C  status: inconclusive\niter_03  cutoff: 16min  cpu_delta: +12°C   gpu_delta: +27°C  status: inconclusive\niter_04  cutoff: 20min  cpu_delta: +12°C   gpu_delta: +31°C  status: ongoing\n\nnote: GPU junction has not shown stabilization plateau in any iteration.' },
+        { t: 'h2', c: 'current hypothesis' },
+        { t: 'p', c: 'GPU thermal behavior under sustained 70B inference is not bounded by the observation window used in iterations 01–04. Either GPU junction temperature stabilizes beyond 20 minutes, or thermal throttling intervenes before stabilization. Iteration 05 will extend the observation window to 40 minutes and include clock speed telemetry to detect throttling events.' },
+        { t: 'h2', c: 'what this means for architecture' },
+        { t: 'p', c: 'If thermal throttling occurs before stabilization, the inference performance model must account for time-varying throughput. A system that performs at rated throughput for 5 minutes and then degrades is architecturally different from a system that sustains throughput. This distinction must be resolved before .build commitments are made.' },
+      ]
+    },
+    {
+      id: 2, status: 'concluded', iter: '06',
+      title: 'NVMe bandwidth as inference bottleneck: resolved',
+      observation: 'NVMe read bandwidth is not the inference bottleneck for models ≤70B at 4-bit quantization. PCIe bus saturation occurs first. Concluded after 6 iterations.',
+      tags: ['nvme', 'bandwidth', 'bottleneck', 'iteration'],
+      read: 8, date: '2026-05-31',
+      body: [
+        { t: 'log', c: 'CONCLUDED — iter 06', sub: '2026-05-31 · nvme · bandwidth · bottleneck' },
+        { t: 'p', c: 'This investigation started with a hypothesis: NVMe sequential read bandwidth is the limiting factor in model load time for large quantized models. After six iterations spanning three different NVMe devices and two quantization levels, the hypothesis has been falsified.' },
+        { t: 'h2', c: 'what was found' },
+        { t: 'code', lang: 'data', c: 'device_a  (3.5 GB/s NVMe)   model_load_time: 42.3s  pcie_util: 91%\ndevice_b  (5.0 GB/s NVMe)   model_load_time: 41.8s  pcie_util: 93%\ndevice_c  (7.0 GB/s NVMe)   model_load_time: 41.2s  pcie_util: 94%\n\nconclusion: load time does not scale with NVMe bandwidth.\nbottleneck: PCIe bus saturation (x4 slot, 3.94 GB/s effective).' },
+        { t: 'h2', c: 'conclusion' },
+        { t: 'p', c: 'For models ≤70B at 4-bit quantization, PCIe bus bandwidth (specifically the slot allocation) is the binding constraint on model load time, not NVMe read speed. Upgrading NVMe storage beyond PCIe x4 bandwidth yields no measurable improvement. The architectural implication: PCIe slot allocation must be specified before storage is specified.' },
+        { t: 'h2', c: 'forwarded to engineering' },
+        { t: 'p', c: 'This observation has been forwarded to .engineering as a defended claim: PCIe slot allocation is a primary architectural constraint for local 70B inference systems, upstream of storage selection. The claim is now in falsification at the theory layer.' },
+      ]
+    },
+    {
+      id: 3, status: 'failed', iter: '02',
+      title: 'Distributed inference across heterogeneous GPUs',
+      observation: 'Tensor parallelism across AMD and NVIDIA GPUs in the same system produces synchronization overhead that eliminates the theoretical throughput gain. Terminated at iter 02.',
+      tags: ['distributed', 'gpu', 'inference', 'fail'],
+      read: 5, date: '2026-05-14',
+      body: [
+        { t: 'log', c: 'FAILED — iter 02 — terminated', sub: '2026-05-14 · distributed · gpu · heterogeneous' },
+        { t: 'p', c: 'This investigation is terminated. The hypothesis — that tensor parallelism across heterogeneous GPUs (AMD + NVIDIA) would yield super-linear throughput gains for 70B inference — was falsified in iteration 01 and confirmed as failed in iteration 02.' },
+        { t: 'h2', c: 'why it failed' },
+        { t: 'code', lang: 'data', c: 'baseline   (single NVIDIA GPU)   throughput: 12.4 tok/s   latency: 80ms\niter_01    (+ AMD GPU, tensor)    throughput: 7.2  tok/s   latency: 310ms\niter_02    (+ AMD GPU, pipeline)  throughput: 9.1  tok/s   latency: 445ms\n\nroot cause: inter-GPU synchronization overhead (PCIe, no NVLink, cross-vendor).\noverhead exceeds theoretical gain at all tested batch sizes.' },
+        { t: 'h2', c: 'what this means' },
+        { t: 'p', c: 'Heterogeneous GPU configurations (cross-vendor) require NVLink-equivalent interconnect to be viable for inference parallelism. PCIe-only communication introduces synchronization latency that grows super-linearly with the number of synchronization points in the tensor split. This is not an optimization problem — it is a hardware constraint.' },
+        { t: 'h2', c: 'refusal forwarded' },
+        { t: 'p', c: 'The proposed architecture (heterogeneous GPU inference cluster) has been refused. The refusal is not a failure of the investigation. The investigation functioned correctly: it identified a boundary before resources were committed to building a system that cannot work. Refusal is superior to degradation.' },
+      ]
+    },
+    {
+      id: 4, status: 'inconclusive', iter: '01',
+      title: 'VRAM pressure points in 70B parameter models at 4-bit',
+      observation: 'Context window size appears to be non-linear in VRAM consumption. Initial measurements are inconsistent across inference backends. Requires controlled reproduction.',
+      tags: ['vram', 'context', 'inference', 'metrics'],
+      read: 4, date: '2026-06-10',
+      body: [
+        { t: 'log', c: 'INCONCLUSIVE — iter 01', sub: '2026-06-10 · vram · context · pressure' },
+        { t: 'p', c: 'Initial observations on VRAM pressure points during 70B inference at 4-bit quantization show inconsistency that prevents conclusion. The inconsistency is the finding of iteration 01: the measurement environment is not yet controlled enough to produce reproducible data.' },
+        { t: 'h2', c: 'observed inconsistency' },
+        { t: 'code', lang: 'data', c: 'context_2k   backend_a: 18.2 GB   backend_b: 19.1 GB   delta: 0.9 GB\ncontext_4k   backend_a: 20.4 GB   backend_b: 22.8 GB   delta: 2.4 GB\ncontext_8k   backend_a: 24.1 GB   backend_b: 31.2 GB   delta: 7.1 GB\n\nnote: delta grows non-linearly. cause unknown.\nhypothesis: kv-cache implementation differs between backends.' },
+        { t: 'h2', c: 'next iteration' },
+        { t: 'p', c: 'Iteration 02 will isolate the KV-cache implementation as the variable. Both backends will be configured identically in all other parameters. If the delta persists, the cause is in the KV-cache implementation. If it disappears, the cause is in configuration differences not yet identified. This investigation remains open.' },
+      ]
+    },
+  ];
+
+  fmtDate(iso) {
+    return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  /* ─── the combination lock ───
-     three glyphs scramble independently; periodically they cascade-lock
-     onto T · B · A together, confirm ("combination accepted"), then release. */
-  var charset="ΞΛΩΔΣΦΨΘΠ#@%&/\\<>{}[]=+*0123456789".split('');
-  var TARGET=['T','B','A'];
-  var els=[c1,c2,c3];
-  var rnd=function(){ return charset[Math.floor(Math.random()*charset.length)]; };
-  var locked=false;
-  var scrambleTimers=[];
-
-  function startScramble(){
-    locked=false;
-    els.forEach(function(el,i){
-      scrambleTimers[i]=setInterval(function(){ if(!locked) el.textContent=rnd(); }, 95 + i*35);
-    });
-  }
-  function stopScramble(){ scrambleTimers.forEach(clearInterval); scrambleTimers=[]; }
-
-  function lockSequence(){
-    if(locked) return;
-    locked=true; stopScramble();
-    /* cascade: each cell flickers a few frames then snaps to its target */
-    els.forEach(function(el,i){
-      setTimeout(function(){
-        var n=0, total=5+Math.floor(Math.random()*4);
-        var iv=setInterval(function(){ el.textContent=rnd();
-          if(++n>=total){ clearInterval(iv); el.textContent=TARGET[i];
-            if(i===els.length-1){ confirm(); } }
-        }, 60);
-      }, i*260);
-    });
-  }
-  function confirm(){
-    cipher.classList.add('lock'); verdict.classList.add('show');
-    setTimeout(function(){
-      cipher.classList.remove('lock'); verdict.classList.remove('show');
-      setTimeout(startScramble, 350);
-    }, 1500);
+  statusStyle(s, type) {
+    const c = this.statusColors[s] || this.statusColors.inconclusive;
+    if (type === 'dot')    return `width:8px; height:8px; border-radius:50%; background:${c.dot}; margin-top:4px; flex-shrink:0;`;
+    if (type === 'badge')  return `font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:${c.text}; background:${c.bg}; padding:3px 8px; border-radius:2px;`;
+    return '';
   }
 
-  startScramble();
-  function schedule(){ var wait=7000 + Math.random()*6000;
-    setTimeout(function(){ lockSequence(); setTimeout(schedule, 4500); }, wait); }
-  schedule();
-})();
+  renderBody(art) {
+    const E = React.createElement;
+    const mono = "'JetBrains Mono', ui-monospace, monospace";
+    const sans = "system-ui, -apple-system, sans-serif";
+    return E(React.Fragment, null,
+      ...art.body.map((b, i) => {
+        if (b.t === 'log') return E('div', { key: i, style: {
+          fontFamily: mono, fontSize: '10px', letterSpacing: '0.22em',
+          textTransform: 'uppercase', color: 'rgba(79,230,221,0.50)',
+          margin: '0 0 6px',
+        }},
+          b.c,
+          E('div', { style: { fontSize: '9px', letterSpacing: '0.14em', color: 'rgba(95,217,207,0.30)', marginTop: '4px', marginBottom: '36px', textTransform: 'none' }}, b.sub)
+        );
+        if (b.t === 'p') return E('p', { key: i, style: {
+          fontFamily: sans, fontSize: '15px', lineHeight: 1.82,
+          color: 'rgba(155,210,196,0.60)', margin: '0 0 22px',
+        }}, b.c);
+        if (b.t === 'h2') return E('div', { key: i, style: {
+          fontFamily: mono, fontSize: '9px', letterSpacing: '0.32em',
+          textTransform: 'uppercase', color: 'rgba(79,230,221,0.38)',
+          margin: '44px 0 14px',
+        }}, b.c);
+        if (b.t === 'code') return E('div', { key: i, style: { margin: '4px 0 28px', position: 'relative' }},
+          E('div', { style: {
+            position: 'absolute', top: '10px', right: '14px',
+            fontFamily: mono, fontSize: '8px', letterSpacing: '0.22em',
+            textTransform: 'uppercase', color: 'rgba(79,230,221,0.20)',
+          }}, b.lang),
+          E('pre', { style: {
+            background: 'rgba(255,255,255,0.016)',
+            border: '1px solid rgba(79,230,221,0.06)',
+            borderLeft: '2px solid rgba(79,230,221,0.18)',
+            borderRadius: '2px', padding: '18px 22px', margin: 0,
+            overflowX: 'auto', fontFamily: mono, fontSize: '11.5px',
+            lineHeight: 1.72, color: 'rgba(165,215,204,0.65)',
+            whiteSpace: 'pre',
+          }}, E('code', null, b.c))
+        );
+        return null;
+      })
+    );
+  }
+
+  renderVals() {
+    const { id, filter } = this.state;
+    const art = id ? this.articles.find(a => a.id === id) : null;
+    const filters = ['all', 'ongoing', 'concluded', 'failed', 'inconclusive'];
+    const visible = this.articles.filter(a => filter === 'all' || a.status === filter);
+    const tabBase = {
+      background: 'transparent', border: 'none', padding: '0',
+      cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace",
+      fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase',
+      transition: 'color 0.1s',
+    };
+    return {
+      showOverview: !art,
+      showDetail:   !!art,
+      filters: filters.map(f => ({
+        label: f,
+        select: () => this.setState({ filter: f }),
+        style: { ...tabBase, color: filter === f ? '#4fe6dd' : 'rgba(95,217,207,0.25)' },
+      })),
+      visibleArticles: visible.map(a => ({
+        ...a,
+        tagsStr:     a.tags.join(' · '),
+        dateStr:     this.fmtDate(a.date),
+        statusLabel: a.status,
+        statusStyle: this.statusStyle(a.status, 'badge'),
+        dotStyle:    this.statusStyle(a.status, 'dot'),
+        open: () => this.setState({ id: a.id }),
+      })),
+      goHome: () => this.setState({ id: null }),
+      back:   () => this.setState({ id: null }),
+      artTitle:        art?.title ?? '',
+      artDate:         art ? this.fmtDate(art.date) : '',
+      artRead:         art ? art.read + ' min read' : '',
+      artTagsStr:      art ? art.tags.join(' · ') : '',
+      detailStatusLabel: art?.status ?? '',
+      detailStatusStyle: art ? this.statusStyle(art.status, 'badge') : '',
+      detailIter:      art?.iter ?? '',
+      articleBody:     art ? this.renderBody(art) : null,
+    };
+  }
+}
 </script>
 </body>
 </html>
